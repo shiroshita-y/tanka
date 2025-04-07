@@ -35,8 +35,6 @@ $breakpoint-sps: 321px;
 // 
 // compassを置き換えたもの
 // 
-// $sprite_img: url("../../assets/img/org2_spr-sca39ff3cf2.png");
-// $sprite_img_2x: url("../../assets/img/org2_spr2x-s4acf7cb55c.png");
 $sprite_img: url("../../assets/img/spr-sca39ff3cf2.png");
 $sprite_img_2x: url("../../assets/img/spr2x-s4acf7cb55c.png");
 $ico_tw: (0, -179px, 44px, 44px);
@@ -79,9 +77,7 @@ $ico_book_mini_2x:(0, 0, 20px, 17px);
 $ico_cart_mini:(0, -46px, 18px, 14px);
 $ico_cart_mini_2x:(0, -58px, 18px, 14px);
 
-// $pagetop:(0, px, px, px);
 $pagetop_2x:(0, -916px, 40px, 40px);
-// $pagetop_sp:(0, px, px, px);
 
 @mixin spr_bg($x, $y, $w, $h) {
   width: $w;
@@ -115,7 +111,7 @@ $pagetop_2x:(0, -916px, 40px, 40px);
 }
 
 // 以下はcompassの機能を使用してスプライト画像を生成するためのコードとなる。
-// compassはすでにサポートが終了しており動作しないため、首里エラーとなるためコメントアウトとする。
+// compassはすでにサポートが終了しており動作せずエラーとなるためコメントアウトとする。
 // スプライト画像を作りたい場合はspriteSmithという代替手段が存在するが、今回スプライト画像を作成することはないため、代替手段の記述は特に行わない。
 // また、このコメントアウトでの対応は出力されるCSSにはどちらにしろ影響がないものとなる。
 // $sprite: sprite-map("spr/*.png", $spacing: 5px);
