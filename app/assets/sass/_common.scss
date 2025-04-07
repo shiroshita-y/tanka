@@ -1,0 +1,2338 @@
+@use "sass:list";// sprite($ico_* で list.nth)を使用するために宣言
+/****************************************
+
+          GENERAL SETTING
+          
+*****************************************/
+
+html,
+body { margin: 0; padding: 0; text-align: center; }
+
+/* --- CLEARFIX --- */
+.cf:after,
+#wrap:after,
+#main:after{ display: block; visibility: hidden; clear: both; height: 0; content: " "; font-size: 0; }
+.cf,
+#wrap,
+#main{ display: inline-block; }
+.cf,
+#wrap,
+#main{ display: block; }
+
+/* --- LOADING --- */
+#loading { position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; background: #FFF; z-index: 1000; }
+.loader { position: fixed; top: 50%; left: 50%; margin: -25px 0 0 -25px; display: inline-block; width: 50px; height: 50px; border: 2px solid #0cf; border-radius: 50%; animation: spin 0.75s infinite linear; border-top-color: transparent; }
+.loader:before,
+.loader:after { left: -2px; top: -2px; display: none; position: absolute; content: ''; width: inherit; height: inherit; border: inherit; border-radius: inherit; }
+.loader{ display: block; border-color: transparent; border-top-color: #0cf; animation: spin 1.25s infinite linear reverse; }
+.loader:after { display: block; border-color: transparent; border-top-color: #0cf; animation: spin 1.25s infinite linear reverse; }
+*, *:before, *:after { box-sizing: border-box; }
+
+
+$font1: "游ゴシック","YuGothic", 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', "Noto Sans Japanese", "メイリオ","Meiryo", sans-serif;
+
+$font2: "Hannari", "Roboto Slab",YuMincho,"游明朝","Yu Mincho","Hiragino Mincho Pro","ヒラギノ明朝 Pro W3","HG明朝E","MS PMincho","ＭＳＰ明朝","MS Mincho","ＭＳ明朝",serif;
+
+$font3: YuMincho,"游明朝","Yu Mincho","Hiragino Mincho Pro","ヒラギノ明朝 Pro W3","HG明朝E", "MS PMincho","ＭＳＰ明朝","MS Mincho","ＭＳ明朝",serif;
+
+$font4: "游ゴシック","YuGothic", 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', "Noto Sans Japanese", "メイリオ","Meiryo", sans-serif;
+
+
+html{
+	height: 100%;
+	min-height: 100%;
+	overflow-y: scroll;
+}
+body{
+  font-family: $font1;
+  font-weight: 500;
+  line-height: 1.8;
+	transition: opacity 0.4s ease; 
+	opacity: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	background: url(../img/bg.jpg) 0 0 repeat;
+	@include mins($breakpoint-sp) {
+		min-width: 1080px;
+	}
+}
+
+img{
+  max-width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+::selection {
+	color: #FFF;
+	background-color: #000;
+	text-shadow: none;
+	transition: color 0.2s ease, background-color 0.2s ease; 
+}
+
+a{
+	text-decoration: none;
+}
+
+$red: #e54b00;
+$yellow: #f5e63d;
+$yellow2: #ebc309;
+
+
+
+/****************************************
+
+          MENU
+          
+*****************************************/
+
+.left{
+	font-family: $font2;
+	width: 60px;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	// background: url('../img/bg_left.jpg') 0 0 repeat;
+  background-color: $yellow;
+	z-index: 1000;
+	transition: width 0.4s ease, top 0.4s ease, left 0.4s ease, opacity 0.4s ease; 
+	@include maxs($breakpoint-sp) {
+		width: 100%;
+		height: 50px;
+		// background: url('../img/bg_left_sp.png') 0 0 repeat-x;
+		// background-size: 24px 50px;
+    // backgroundで表示していた画像をmaskで色変更して表示
+    -webkit-mask:   url("../img/bg_left_sp.png") no-repeat 0 0 / contain;
+    mask-image:     url("../img/bg_left_sp.png");
+    mask-repeat:    repeat-x;
+    mask-position:  0 0;
+    mask-size:      contain;
+  // maskここまで
+		top: -50px;
+		opacity: 0;
+		&:after{
+			content: "";
+			display: block;
+			width: 100%;
+			height: 0;
+			position: fixed;
+			top: 0;
+			left: 0;
+			opacity: 0;
+			// background: url('../img/bg_left.jpg') 0 0 repeat;
+			// background-size: 100px 100px;
+      background-color: $yellow;
+			z-index: 50;
+			transition: opacity 0.4s ease 0.2s; 
+		}
+		.active &{
+			top: 0;
+			opacity: 1;
+		}
+    &.active{
+      @include maxs($breakpoint-sp) {mask-image: none;}
+    }
+	}
+	@include mins($breakpoint-sp) {
+		left: -70px;
+		.active &{
+			left: 0;
+			opacity: 1;
+		}
+    &::after{
+      content: "";
+      display: block;
+      width: 6px;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      right: -6px;
+      // background: url('../img/bg_left_parts.png') 0 0 repeat-y;
+      // backgroundで表示していた画像をmaskで色変更して表示
+      -webkit-mask:   url("../img/bg_left_parts.png") no-repeat center center / contain;
+      mask-image:     url("../img/bg_left_parts.png");
+      mask-repeat:    repeat-y;
+      mask-position:  0 0;
+      mask-size:      contain;
+      background-color: $yellow;
+    }
+	}
+	
+	.sns{
+		width: 44px;
+		position: fixed;
+		top: 15px;
+		left: 12px;
+		pointer-events: auto;
+		opacity: 1;
+		z-index: 51;
+		transition: opacity 0.5s ease; 
+		@include maxs($breakpoint-sp) {
+			width: 100%;
+			top: 11px;
+			text-align: left;
+		}
+		li{
+			margin: 0 0 12px;
+			@include maxs($breakpoint-sp) {
+				display: inline-block;
+				margin: 0 10px 0 0;
+			}
+			a{
+				display: block;
+				opacity: 1;
+				transition: opacity 0.5s ease; 
+				@include mins($breakpoint-sp) {
+					&:hover{
+						opacity: 0.5;
+					}
+				}
+			}
+			&.ico_tw{
+				a{
+					// @include spr_re('ico_tw');
+          @include spr_re(
+          list.nth($ico_tw, 1),
+          list.nth($ico_tw, 2),
+          list.nth($ico_tw, 3),
+          list.nth($ico_tw, 4)
+          );
+					@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+						// @include spr_re_2x('ico_tw');
+            @include spr_re_2x(
+            list.nth($ico_tw_2x, 1),
+            list.nth($ico_tw_2x, 2),
+            list.nth($ico_tw_2x, 3),
+            list.nth($ico_tw_2x, 4)
+            );
+					}
+					@include maxs($breakpoint-sp) {
+						// @include spr_re_2x('ico_tw_sp');
+            @include spr_re_2x(
+            list.nth($ico_tw_sp, 1),
+            list.nth($ico_tw_sp, 2),
+            list.nth($ico_tw_sp, 3),
+            list.nth($ico_tw_sp, 4)
+            );
+					}
+				}
+			}
+			&.ico_fb{
+				a{
+					// @include spr_re('ico_fb');
+          @include spr_re(
+          list.nth($ico_fb, 1),
+          list.nth($ico_fb, 2),
+          list.nth($ico_fb, 3),
+          list.nth($ico_fb, 4)
+          );
+					@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+						// @include spr_re_2x('ico_fb');
+            @include spr_re_2x(
+            list.nth($ico_fb_2x, 1),
+            list.nth($ico_fb_2x, 2),
+            list.nth($ico_fb_2x, 3),
+            list.nth($ico_fb_2x, 4)
+            );
+					}
+					@include maxs($breakpoint-sp) {
+						// @include spr_re_2x('ico_fb_sp');
+            @include spr_re_2x(
+            list.nth($ico_fb_sp, 1),
+            list.nth($ico_fb_sp, 2),
+            list.nth($ico_fb_sp, 3),
+            list.nth($ico_fb_sp, 4)
+            );
+					}
+				}
+			}
+			&.ico_li{
+				a{
+					// @include spr_re('ico_li');
+          @include spr_re(
+          list.nth($ico_li, 1),
+          list.nth($ico_li, 2),
+          list.nth($ico_li, 3),
+          list.nth($ico_li, 4)
+          );
+					@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+						// @include spr_re_2x('ico_li');
+            @include spr_re_2x(
+            list.nth($ico_li_2x, 1),
+            list.nth($ico_li_2x, 2),
+            list.nth($ico_li_2x, 3),
+            list.nth($ico_li_2x, 4)
+            );
+					}
+					@include maxs($breakpoint-sp) {
+						// @include spr_re_2x('ico_li_sp');
+            @include spr_re_2x(
+            list.nth($ico_li_sp, 1),
+            list.nth($ico_li_sp, 2),
+            list.nth($ico_li_sp, 3),
+            list.nth($ico_li_sp, 4)
+            );
+					}
+				}
+			}
+		}
+	}
+	
+	.sns_sp{
+		width: 160px;
+		position: fixed;
+		top: 15px;
+		left: 12px;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.5s ease; 
+		z-index: 51;
+		@include maxs($breakpoint-sp) {
+			width: 140px;
+			top: auto;
+			left: 50%;
+			bottom: 20px;
+			margin-left: -60px;
+		}
+		li{
+			text-align: left;
+			margin: 0 0 12px;
+			@include maxs($breakpoint-sp) {
+				height: 28px;
+			}
+			a{
+				height: 44px;
+				display: inline-block;
+				opacity: 1;
+				vertical-align: top;
+				transition: opacity 0.5s ease; 
+				@include maxs($breakpoint-sp) {
+					height: 44px;
+				}
+				@include mins($breakpoint-sp) {
+					&:hover{
+						opacity: 0.5;
+					}
+				}
+				span{
+					display: inline-block;
+				}
+				&:after{
+					color: #000;
+					font-size: 14px;
+					display: inline-block;
+					line-height: 44px;
+					margin-left: 10px;
+					vertical-align: top;
+					@include maxs($breakpoint-sp) {
+						font-size: 14px;
+						line-height: 28px;
+					}
+				}
+			}
+			&.ico_tw{
+				a{
+					span{
+						// @include spr_re('ico_tw');
+            @include spr_re(
+            list.nth($ico_tw, 1),
+            list.nth($ico_tw, 2),
+            list.nth($ico_tw, 3),
+            list.nth($ico_tw, 4)
+            );
+						@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+							// @include spr_re_2x('ico_tw');
+              @include spr_re_2x(
+              list.nth($ico_tw_2x, 1),
+              list.nth($ico_tw_2x, 2),
+              list.nth($ico_tw_2x, 3),
+              list.nth($ico_tw_2x, 4)
+              );
+						}
+						@include maxs($breakpoint-sp) {
+							// @include spr_re_2x('ico_tw_sp');
+              @include spr_re_2x(
+              list.nth($ico_tw_sp, 1),
+              list.nth($ico_tw_sp, 2),
+              list.nth($ico_tw_sp, 3),
+              list.nth($ico_tw_sp, 4)
+              );
+						}
+					}
+					&:after{
+						content: "ポストする";
+					}
+				}
+			}
+			&.ico_fb{
+				a{
+					span{
+						// @include spr_re('ico_fb');
+            @include spr_re(
+            list.nth($ico_fb, 1),
+            list.nth($ico_fb, 2),
+            list.nth($ico_fb, 3),
+            list.nth($ico_fb, 4)
+            );
+						@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+							// @include spr_re_2x('ico_fb');
+              @include spr_re_2x(
+              list.nth($ico_fb_2x, 1),
+              list.nth($ico_fb_2x, 2),
+              list.nth($ico_fb_2x, 3),
+              list.nth($ico_fb_2x, 4)
+              );
+						}
+						@include maxs($breakpoint-sp) {
+							// @include spr_re_2x('ico_fb_sp');
+              @include spr_re_2x(
+              list.nth($ico_fb_sp, 1),
+              list.nth($ico_fb_sp, 2),
+              list.nth($ico_fb_sp, 3),
+              list.nth($ico_fb_sp, 4)
+              );
+						}
+					}
+					&:after{
+						content: "シェアする";
+					}
+				}
+			}
+			&.ico_li{
+				a{
+					span{
+						// @include spr_re('ico_li');
+            @include spr_re(
+            list.nth($ico_li, 1),
+            list.nth($ico_li, 2),
+            list.nth($ico_li, 3),
+            list.nth($ico_li, 4)
+            );
+						@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+							// @include spr_re_2x('ico_li');
+              @include spr_re_2x(
+              list.nth($ico_li_2x, 1),
+              list.nth($ico_li_2x, 2),
+              list.nth($ico_li_2x, 3),
+              list.nth($ico_li_2x, 4)
+              );
+						}
+						@include maxs($breakpoint-sp) {
+							// @include spr_re_2x('ico_li_sp');
+              @include spr_re_2x(
+              list.nth($ico_li_sp, 1),
+              list.nth($ico_li_sp, 2),
+              list.nth($ico_li_sp, 3),
+              list.nth($ico_li_sp, 4)
+              );
+						}
+					}
+					&:after{
+						content: "LINEで送る";
+					}
+				}
+			}
+		}
+	}
+}
+//ベタ書き分を追加ここから　そのため.left配下一旦切る/////////////////////////////
+.news_wrap{
+  text-align:left;
+  margin:50px 50px 20px 150px;
+  padding: 10px;
+  border: 1px solid #333333;
+  font-size: 13px;
+  width: 500px;
+  height: 150px;
+  justify-content: center;
+  @include maxs($breakpoint-sp) {
+    text-align:left;
+    margin:60px 50px 20px 10px;
+    padding: 10px;
+    border: 1px solid #333333;
+    font-size: 10px;
+    width: 290px;
+    height: 140px;
+  }
+}
+.left .sns_sp li.ico_qa a span{
+  width:44px;height:44px;
+  background-image:url('../../assets/img/spr/ico_qa.png');
+  background-repeat:no-repeat;
+  text-indent:100%;
+}   
+@include maxs($breakpoint-sp) {
+  .left .sns_sp li.ico_qa a span{
+    width:27.5px;height:27.5px;    
+    background-image:url('../../assets/img/spr2x/ico_qa_sp2.png');
+    background-repeat:no-repeat;
+    text-indent:100%;
+  }
+}
+.sns_sp li.ico_qa a:after{content:"お問い合わせ"}
+//ベタ書き分を追加ここまで　.left配下再開////////////////////////////////////
+.left{
+	nav{
+		width: 120px;
+		height: 180px;
+		position: fixed;
+		top: 50%;
+		left: 90px;
+		text-align: left;
+		display: inline-block;
+    /* autoprefixer: ignore next */ //↓のautoprefixerを無効化して残す
+		-webkit-writing-mode: vertical-rl;
+    /* autoprefixer: ignore next */ //↓のautoprefixerを無効化して残す
+		-ms-writing-mode: tb-rl;
+		writing-mode: vertical-rl;
+		opacity: 0;
+		pointer-events: none;
+		margin-top: -90px;
+		transition: opacity 0.4s ease; 
+		@include maxs($breakpoint-sp) {
+			top: 50%;
+			left: 50%;
+			margin: -90px 0 0 -60px;
+			z-index: 51;
+		}
+		li{
+			margin: 0 10px;
+			&.no_link{
+				a{
+					pointer-events: none;
+					opacity: 0.2;
+				}
+			}
+			a{
+				color: #000;
+				display: block;
+				width: 30px;
+				font-size: 18px;
+				letter-spacing: 0.05em;
+				position: relative;
+				top: 0;
+				opacity: 1;
+				transition: top 0.5s ease, opacity 0.5s ease; 
+				&:before{
+					content: "";
+					display: block;
+					position: absolute;
+					top: -23px;
+					left: 6px;
+					// @include spr_re('ico_sankaku');
+          @include spr_re(
+          list.nth($ico_sankaku, 1),
+          list.nth($ico_sankaku, 2),
+          list.nth($ico_sankaku, 3),
+          list.nth($ico_sankaku, 4)
+          );
+					@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+						// @include spr_re_2x('ico_sankaku');
+            @include spr_re_2x(
+            list.nth($ico_sankaku_2x, 1),
+            list.nth($ico_sankaku_2x, 2),
+            list.nth($ico_sankaku_2x, 3),
+            list.nth($ico_sankaku_2x, 4)
+            );
+					}
+					@include maxs($breakpoint-sp) {
+						// @include spr_re_2x('ico_sankaku_sp');
+            @include spr_re_2x(
+              list.nth($ico_sankaku_sp, 1),
+              list.nth($ico_sankaku_sp, 2),
+              list.nth($ico_sankaku_sp, 3),
+              list.nth($ico_sankaku_sp, 4)
+              );
+					}
+				}
+				&:hover{
+					opacity: 0.7;
+				}
+			}
+		}
+	}
+	
+	#btn_menu{
+		width: 50px;
+    height: 50px;
+		position: fixed;
+		top: 50%;
+		left: 7px;
+		margin-top: -25px;
+		cursor: pointer;
+		z-index: 1001;
+		opacity: 1;
+		transition: opacity 0.4s ease; 
+		@include mins($breakpoint-sp) {
+			&:hover{
+				opacity: 0.5;
+			}
+		}
+		span{
+      display: inline-block;
+      transition: all .4s;
+      box-sizing: border-box;
+      position: absolute;
+      left: 15px;
+      width: 20px;
+      height: 2px;
+      background-color: #000;
+      &:nth-of-type(1) { top: 12px; }
+      &:nth-of-type(2) { top: 24px; }
+      &:nth-of-type(3) { bottom: 12px; }
+    }
+    @include maxs($breakpoint-sp) {
+      top: 0;
+      left: auto;
+      right: 0;
+      margin: 0;
+      span{
+	      &:nth-of-type(1) { top: 15px; }
+        &:nth-of-type(2) { top: 24px; }
+        &:nth-of-type(3) { bottom: 15px; }
+      }
+    }
+	}
+	
+	&.active{
+		@include mins($breakpoint-sp) {
+			width: 290px;
+		}
+		@include maxs($breakpoint-sp) {
+			&:after{
+				height: 100%;
+				opacity: 1;
+				transition: opacity 0.4s ease; 
+			}
+		}
+		.sns{
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.4s ease 0.4s; 
+			@include maxs($breakpoint-sp) {
+				transition: opacity 0.2s ease; 
+			}
+		}
+		.sns_sp{
+			opacity: 1;
+			pointer-events: auto;
+			transition: opacity 0.4s ease 0.4s; 
+			@include maxs($breakpoint-sp) {
+				transition: opacity 0.4s ease 0.2s; 
+			}
+		}
+		nav{
+			opacity: 1;
+			pointer-events: auto;
+			transition: opacity 0.4s ease 0.4s; 
+			@include maxs($breakpoint-sp) {
+				transition: opacity 0.4s ease 0.2s; 
+			}
+		}
+		
+		#btn_menu{
+			span {
+	      &:nth-of-type(1) {
+	        -webkit-transform: translateY(12px) rotate(-45deg);
+	        transform: translateY(12px) rotate(-45deg);
+	      }
+	      &:nth-of-type(2) { opacity: 0; }
+	      &:nth-of-type(3) {
+	        -webkit-transform: translateY(-12px) rotate(45deg);
+	        transform: translateY(-12px) rotate(45deg);
+	      }
+	      @include maxs($breakpoint-sp) {
+		    	&:nth-of-type(1) {
+		        -webkit-transform: translateY(9px) rotate(-45deg);
+		        transform: translateY(9px) rotate(-45deg);
+		      }
+	        &:nth-of-type(3) {
+		        -webkit-transform: translateY(-9px) rotate(45deg);
+		        transform: translateY(-9px) rotate(45deg);
+		      }
+		    }
+	    }
+    }
+	}
+}
+
+
+
+/****************************************
+
+          HERO
+          
+*****************************************/
+
+.hero{
+	margin: 0 auto;
+	position: relative;
+	.logo{
+		position: absolute;
+		top: 50px;
+		left: 0;
+		z-index: 51;
+    &::before{// ロゴ背景色 20250404shiroshita
+      content: "";
+      display: block;
+      position: absolute;
+      top: 41px;
+      width: 90px;
+      height: 209px;
+      background-color: $yellow;
+    }
+		@include maxs($breakpoint-sp) {
+			top: 70px;
+			left: auto;
+			right: 20px;
+      &::before{// ロゴ背景色 20250404shiroshita
+        content: "";
+        display: block;
+        position: absolute;
+        top: 21px;
+        left: 0;
+        width: 44px;
+        height: 101px;
+        background-color: $yellow;
+      }
+		}
+		a{
+			opacity: 1;
+			display: block;
+			position: relative;
+			transition: opacity 0.4s ease; 
+			// @include spr_re('logo');
+      @include spr_re(
+      list.nth($logo, 1),
+      list.nth($logo, 2),
+      list.nth($logo, 3),
+      list.nth($logo, 4)
+      );
+			@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+				// @include spr_re_2x('logo');
+        @include spr_re_2x(
+        list.nth($logo_2x, 1),
+        list.nth($logo_2x, 2),
+        list.nth($logo_2x, 3),
+        list.nth($logo_2x, 4)
+        );
+			}
+			@include maxs($breakpoint-sp) {
+				// @include spr_re_2x('logo_sp');
+        @include spr_re_2x(
+        list.nth($logo_sp, 1),
+        list.nth($logo_sp, 2),
+        list.nth($logo_sp, 3),
+        list.nth($logo_sp, 4)
+        );
+			}
+			@include mins($breakpoint-sp) {
+				&:hover{
+					opacity: 0.5;
+				}
+			}
+		}
+	}
+	.logo_kcpf{
+		position: absolute;
+		top: 45px;
+		right: 0;
+		z-index: 10;
+		@include maxs($breakpoint-sp){
+			display: none;
+		}
+		a{
+			opacity: 1;
+			display: block;
+			transition: opacity 0.4s ease; 
+			// @include spr_re('logo_kcpf');
+      @include spr_re(
+      list.nth($logo_kcpf, 1),
+      list.nth($logo_kcpf, 2),
+      list.nth($logo_kcpf, 3),
+      list.nth($logo_kcpf, 4)
+      );
+			@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+				// @include spr_re_2x('logo_kcpf');
+        @include spr_re_2x(
+        list.nth($logo_kcpf_2x, 1),
+        list.nth($logo_kcpf_2x, 2),
+        list.nth($logo_kcpf_2x, 3),
+        list.nth($logo_kcpf_2x, 4)
+        );
+			}
+			&:hover{
+				opacity: 0.5;
+			}
+		}
+	}
+	
+	.bookinfo{
+		@include mins($breakpoint-sp){
+			width: 170px;
+			position: absolute;
+			top: 105px;
+			right: 0;
+			box-sizing: border-box;
+			padding-top: 110px;
+		}
+		@include maxs($breakpoint-sp) {
+			width: 250px;
+			margin: 0 auto;
+		}
+		.book_cover{
+			width: 170px;
+			margin-bottom: 15px;
+			@include maxs($breakpoint-sp) {
+				width: 90px;
+				float: left;
+				margin: 0 0 25px;
+			}
+			img{
+				vertical-align: top;
+				box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+			}
+		}
+		.bookinfo_txt{
+			@include maxs($breakpoint-sp) {
+				width: 140px;
+				float: right;
+				margin: 0 0 25px;
+				position: relative;
+			}
+			.bookinfo_txt_tit{
+				font-family: 'Neuton', YuMincho,"游明朝","Yu Mincho","Hiragino Mincho Pro","ヒラギノ明朝 Pro W3","HG明朝E","MS PMincho","ＭＳＰ明朝","MS Mincho","ＭＳ明朝",serif;
+				@include mins($breakpoint-sp){
+					width: 170px;
+					height: 90px;
+					position: absolute;
+					top: 0;
+					right: 0;
+					text-align: right;
+					.tit_y,
+					.tit_m_num,
+					.tit_num{
+						display: block;
+						position: absolute;
+						line-height: 100%;
+					}
+					.tit_y{
+						font-size: 18px;
+						letter-spacing: 0.05em;
+						top: 30px;
+						right: 0;
+						span{
+							font-size: 13px;
+						}
+					}
+					.tit_m_num{
+						font-size: 130px;
+						top: -29px;
+						right: 60px;
+					}
+					.tit_num{
+						font-size: 28px;
+						top: 60px;
+						right: 0;
+					}
+				}
+				@include maxs($breakpoint-sp){
+					text-align: left;
+					height: 70px;
+					.tit_y,
+					.tit_m_num,
+					.tit_num{
+						display: block;
+						position: absolute;
+						line-height: 100%;
+					}
+					.tit_y{
+						font-size: 18px;
+						letter-spacing: 0.05em;
+						top: 10px;
+						left: 57px;
+						width: 75px;
+						text-align: right;
+						span{
+							font-size: 13px;
+						}
+					}
+					.tit_m_num{
+						font-size: 90px;
+						top: -29px;
+						left: 0;
+						width: 75px;
+						text-align: right;
+					}
+					.tit_num{
+						font-size: 18px;
+						top: 34px;
+						left: 81px;
+					}
+				}
+			}
+			p{
+				font-family: $font1;
+				text-align: right;
+				font-size: 14px;
+				margin: 0 0 15px;
+				@include maxs($breakpoint-sp){
+					font-size: 12px;
+					text-align: left;
+					margin: 0;
+				}
+			}
+			.btn_buy_pc{
+				color: #000;
+				width: 100%;
+				height: 54px;
+				display: block;
+				font-family: $font2;
+				font-size: 17px;
+				line-height: 54px;
+				border: 1px solid #000;
+				box-sizing: border-box;
+				text-align: center;
+				background-color: $yellow;/*ここではテーマカラーを変更せず、ファイル末尾 theme-color-setting で設定する*/
+				transition: border 0.4s ease, background-color 0.4s ease; 
+				&:hover{
+					background-color: $yellow2;/*ここではテーマカラーを変更せず、ファイル末尾 theme-color-setting で設定する*/
+				}
+				&:before{
+					content: "";
+					display: inline-block;
+					position: relative;
+					top: 2px;
+					margin-right: 12px;
+					// @include spr_re('ico_cart');
+          @include spr_re(
+          list.nth($ico_cart, 1),
+          list.nth($ico_cart, 2),
+          list.nth($ico_cart, 3),
+          list.nth($ico_cart, 4)
+          );
+					@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+						// @include spr_re_2x('ico_cart');
+            @include spr_re_2x(
+              list.nth($ico_cart_2x, 1),
+              list.nth($ico_cart_2x, 2),
+              list.nth($ico_cart_2x, 3),
+              list.nth($ico_cart_2x, 4)
+              );
+					}
+				}
+				@include maxs($breakpoint-sp){
+					display: none;
+				}
+				&.teiki{
+					border-top: 0;
+				}
+			}
+		}
+		#buy_menu_sp{
+			clear: both;
+			width: 250px;
+			height: 45px;
+			overflow: hidden;
+			box-sizing: border-box;
+			border: 1px solid #000;
+			background-color: $yellow;/*ここではテーマカラーを変更せず、ファイル末尾 theme-color-setting で設定する*/
+			font-family: $font3;
+			padding-bottom: 5px;
+			transition: height 0.4s ease; 
+			&.active{
+				height: 305px;
+			}
+			#btn_buy_menu_close{
+				color: #000;
+				display: block;
+				font-size: 14px;
+				width: 100%;
+				height: 35px;
+				line-height: 35px;
+				cursor: pointer;
+				&:before{
+					content: "×";
+					display: inline-block;
+					margin-right: 10px;
+					position: relative;
+			    top: 1px;
+				}
+			}
+			#btn_buy_menu{
+				color: #000;
+				display: block;
+				font-size: 14px;
+				width: 100%;
+				height: 45px;
+				line-height: 45px;
+				cursor: pointer;
+				&:before{
+					content: "";
+					display: inline-block;
+					margin-right: 10px;
+					position: relative;
+			    top: 1px;
+					@include maxs($breakpoint-sp) {
+						// @include spr_re_2x('ico_cart_sp');
+            @include spr_re_2x(
+              list.nth($ico_cart_sp, 1),
+              list.nth($ico_cart_sp, 2),
+              list.nth($ico_cart_sp, 3),
+              list.nth($ico_cart_sp, 4)
+              );
+					}
+				}
+			}
+			ul{
+				text-align: left;
+				display: inline-block;
+    /* autoprefixer: ignore next */ //↓のautoprefixerを無効化して残す
+				-webkit-writing-mode: vertical-rl;
+    /* autoprefixer: ignore next */ //↓のautoprefixerを無効化して残す
+				-ms-writing-mode: tb-rl;
+				writing-mode: vertical-rl;
+				transition: opacity 0.4s ease; 
+				li{
+					margin: 0 10px;
+					text-align: center;
+					&.no_link{
+						opacity: 0.5;
+						pointer-events: none;
+					}
+					a{
+						color: #000;
+						display: block;
+						width: 40px;
+						height: 210px;
+						font-size: 14px;
+						letter-spacing: 0.05em;
+						line-height: 40px;
+						position: relative;
+						border: 1px solid #000;
+						padding: 20px 0;
+						background-color: #FFF;
+						text-align: left;
+						box-sizing: border-box;
+					}
+				}
+			}
+			@include mins($breakpoint-sp){
+				display: none;
+			}
+		}
+		.view_new_content,
+		.view_backnumber{
+			width: 250px;
+			height: 44px;
+			font-family: $font3;
+			font-size: 14px;
+			color: #000;
+			display: block;
+			line-height: 44px;
+			border: 1px solid #000;
+			box-sizing: border-box;
+			text-align: center;
+			background-color: #FFF;
+			position: relative;
+			&:before{
+				content: "";
+				display: inline-block;
+				margin-right: 10px;
+				position: relative;
+		    top: 3px;
+				@include maxs($breakpoint-sp) {
+					// @include spr_re_2x('ico_book_sp');
+          @include spr_re_2x(
+          list.nth($ico_book_sp, 1),
+          list.nth($ico_book_sp, 2),
+          list.nth($ico_book_sp, 3),
+          list.nth($ico_book_sp, 4)
+          );
+				}
+			}
+			@include mins($breakpoint-sp){
+				display: none;
+			}
+		}
+		.view_backnumber{
+			top: -2px;
+		}
+		.view_new_content{
+			top: -1px;
+		}
+	}
+	
+	.topics{
+		width: 100%;
+		text-align: left;
+		position: absolute;
+		top: 0;
+    left: 0;
+    z-index: 10;
+		@include maxs($breakpoint-sp) {
+			width: -webkit-calc( 100% - 52px );
+			width: calc( 100% - 52px );
+		}
+		.topics_wrap{
+			max-width: 450px;
+			height: 440px;
+			position: absolute;
+			display: inline;
+			top: 0;
+	    left: 50%;
+    /* autoprefixer: ignore next */ //↓のautoprefixerを無効化して残す
+      -ms-writing-mode: tb-rl;
+			// writing-mode: tb-rl;//多分-ms-の書き損じなのでコメントアウト
+			-o-writing-mode: vertical-rl;
+    /* autoprefixer: ignore next */ //↓のautoprefixerを無効化して残す
+			-webkit-writing-mode: vertical-rl;
+			writing-mode: vertical-rl;
+	    transform: -ms-translate(-50%, 215px);
+	    transform: translate(-50%, 215px);
+	    @include maxs($breakpoint-sp) {
+		    // transform: translate(-50%, 126px);
+        transform: translate(-55%, 215px)
+			}
+			.topics_tit{
+				color: $red;
+				font-family: $font3;
+				font-size: 30px;
+				font-weight: bold;
+				display: inline;
+				background-color: #FFF;
+				@include maxs($breakpoint-sp) {
+					font-size: 20px;
+				}
+				@include maxs($breakpoint-sps) {
+					font-size: 16px;
+				}
+			}
+			.subcopy{
+				font-family: $font3;
+				font-size: 18px;
+				font-weight: bold;
+				margin-right: 16px;
+				span{
+					display: inline;
+					background-color: #FFF;
+				}
+				@include maxs($breakpoint-sp) {
+					font-size: 14px;
+					margin-right: 8px;
+				}
+				@include maxs($breakpoint-sps) {
+					font-size: 11px;
+			    line-height: 1.6;
+				}
+			}
+			.main_title{
+				font-family: $font3;
+				// font-size: 48px;
+				font-size: 34px;
+				font-weight: bold;
+				margin-left: 23px;
+				letter-spacing: 0.05em;
+				line-height: 1.3;
+				span{
+					display: inline;
+					background-color: #FFF;
+				}
+				@include maxs($breakpoint-sp) {
+					// font-size: 30px;
+					font-size: 20px;
+					margin-left: 15px;
+				}
+				@include maxs($breakpoint-sps) {
+					font-size: 25px;
+			    line-height: 1.6;
+				}
+			}
+			.bodycopy{
+				font-family: $font1;
+				font-size: 15px;
+				font-weight: bold;
+				letter-spacing: 0.05em;
+				line-height: 2;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				span{
+					display: inline;
+					background-color: #FFF;
+				}
+				@include maxs($breakpoint-sp) {
+					font-size: 12px;
+					line-height: 2;
+				}
+				@include maxs($breakpoint-sps) {
+					font-size: 11px;
+				}
+			}
+		}
+	}
+	
+	.index{
+		font-family: $font4;
+		// max-width: 600px;
+		max-width: 580px;//ベタ書き追加分
+		padding-top: 650px;
+    padding-right: 20px;//ベタ書き追加分
+		margin: 0 auto 0;
+		text-align: left;
+		position: relative;
+		z-index: 11;
+    box-sizing: border-box;//ベタ書き追加分
+      @include maxs($breakpoint-sp) {
+			// padding: 430px 20px 0;
+      padding: 500px 20px 0;//ベタ書き追加分
+			margin-bottom: 40px;
+			box-sizing: border-box;
+		}
+		#index_wrap{
+			width: 100%;
+			position: relative;
+			overflow: hidden;
+			transition: height 0.4s ease; 
+			&.close{
+				height: 120px !important;
+				&:after{
+					opacity: 1;
+					pointer-events: auto;
+				}
+			}
+			p{
+				color: #000;
+				font-size: 14px;
+				line-height: 2;
+				@include maxs($breakpoint-sp) {
+					font-size: 12px;
+				}
+			}
+			&:after{
+				content: "";
+				display: block;
+				width: 100%;
+				height: 80px;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				opacity: 0;
+				background: url('../img/mask_index.png') 0 0 repeat-x;
+				transition: opacity 0.4s ease; 
+				pointer-events: none;
+			}
+		}
+		#btn_index_readmore{
+			cursor: pointer;
+			color: #000;
+			width: 168px;
+			height: 44px;
+			display: block;
+			font-family: $font2;
+			font-size: 16px;
+			line-height: 44px;
+			border: 1px solid #000;
+			box-sizing: border-box;
+			text-align: center;
+			background-color: #FFF;
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			margin-left: -84px;
+			transition: color 0.4s ease, border 0.4s ease; 
+			@include mins($breakpoint-sp) {
+				&:hover{
+					color: #333;
+					border: 1px solid $red;
+				}
+			}
+			@include maxs($breakpoint-sp) {
+				width: 250px;
+				font-size: 14px;
+				margin-left: -125px;
+			}
+			&:before{
+				content: "";
+				display: inline-block;
+				position: relative;
+				top: 0px;
+				width: 7px;
+				height: 7px;
+				border-right: 1px solid #000;
+		    border-bottom: 1px solid #000;
+		    margin-right: 12px;
+		    -webkit-transform: rotate(45deg);
+		    transform: rotate(45deg);
+		    position: relative;
+		    top: -4px;
+			}
+			.open{
+				display: inline-block;
+			}
+			.btnclose{
+				display: none;
+			}
+			&.close{
+				.open{
+					display: none;
+				}
+				.btnclose{
+					display: inline-block;
+				}
+				&:before{
+			    -webkit-transform: rotate(-135deg);
+			    transform: rotate(-135deg);
+			    position: relative;
+			    top: -1px;
+			    margin-right: 14px;
+				}
+			}
+		}
+	}
+}
+
+
+
+
+
+/****************************************
+
+          MAIN
+          
+*****************************************/
+
+
+.main{
+	max-width: 920px;
+	margin: 0 auto;
+	position: relative;
+	left: 30px;
+	overflow: hidden;
+	opacity: 0;
+	transition: opacity 0.5s ease; 
+	@include maxs($breakpoint-sp) {
+		left: 0;
+		box-sizing: border-box;
+		padding: 0;
+	}
+	.active &{
+		opacity: 1;
+	}
+}
+
+.c_tit{
+	clear: both;
+	font-family: $font3;
+	font-size: 16px;
+	line-height: 100%;
+	text-align: center;
+	margin: 0 auto 35px;
+	padding-top: 100px;
+	&:after{
+		content: "";
+		display: block;
+		margin: 10px auto 0;
+		// @include spr_re('ico_sankaku');
+    @include spr_re(
+    list.nth($ico_sankaku, 1),
+    list.nth($ico_sankaku, 2),
+    list.nth($ico_sankaku, 3),
+    list.nth($ico_sankaku, 4)
+    );
+		@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+			// @include spr_re_2x('ico_sankaku');
+      @include spr_re_2x(
+      list.nth($ico_sankaku_2x, 1),
+      list.nth($ico_sankaku_2x, 2),
+      list.nth($ico_sankaku_2x, 3),
+      list.nth($ico_sankaku_2x, 4)
+      );
+		}
+	}
+	@include maxs($breakpoint-sp) {
+		margin: 0 auto 20px;
+		padding-top: 80px;
+	}
+}
+.l_tit {
+	clear: both;
+	font-family: YuMincho, "游明朝", "Yu Mincho", "Hiragino Mincho Pro", "ヒラギノ明朝 Pro W3", "HG明朝E", "MS PMincho", "ＭＳＰ明朝", "MS Mincho", "ＭＳ明朝", serif;
+	font-size: 16px;
+	line-height: 100%;
+	text-align: left;
+	margin: 0 auto 35px;
+	padding-top: 100px
+}
+
+.block{
+	box-sizing: border-box;
+	border-top: 1px solid #000;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	background-color: #FFF;
+	position: relative;
+	@include maxs($breakpoint-sp) {
+		border-left: none;
+		border-right: none;
+	}
+	&:last-child{
+		border-bottom: 1px solid #000;
+	}
+	&.txt{
+		.block_wrap{
+			width: 100%;
+			padding: 80px 50px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			@include maxs($breakpoint-sp) {
+				padding: 35px 25px;
+			}
+			@include maxs($breakpoint-sps) {
+				padding: 35px 15px;
+			}
+		}
+    //ベタ書き追加 start
+    .kisetsu{
+      display:block;
+      .kisetsu_box{
+        @include maxs($breakpoint-sp) {
+          margin-bottom: 30px;
+        }
+      }
+    }
+    //ベタ書き追加 ここまで
+	}
+	&.texture_01{
+		background: url(../img/texture_01.jpg) 0 0 repeat;
+	}
+	@include mins($breakpoint-sp) {
+		&:before,
+		&:after,
+		.block_wrap:before,
+		.block_wrap:after{
+			content: "";
+			display: block;
+			width: 80px;
+			height: 80px;
+			background: url(../img/bg.jpg) 0 0 repeat;
+			-webkit-transform: rotate(45deg);
+			transform: rotate(45deg);
+			position: absolute;
+			z-index: 100;
+		}
+		&:before{
+			top: -40px;
+			left: -40px;
+		}
+		&:after{
+			top: -40px;
+			right: -40px;
+		}
+		.block_wrap:before{
+			bottom: -40px;
+			left: -40px;
+		}
+		.block_wrap:after{
+			bottom: -40px;
+			right: -40px;
+		}
+	}
+	dl{
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		dt{
+			width: 30%;
+			color: $red;
+			font-family: $font3;
+			font-weight: bold;
+			font-size: 20px;
+			letter-spacing: 0.05em;
+			line-height: 1.5;
+			margin: 0 0 25px;
+			text-align: right;
+			@include maxs($breakpoint-sp) {
+				width: 45px;
+				font-size: 16px;
+				margin: 0;
+				text-align: left;
+    /* autoprefixer: ignore next */ //↓のautoprefixerを無効化して残す
+				-webkit-writing-mode: vertical-rl;
+    /* autoprefixer: ignore next */ //↓のautoprefixerを無効化して残す
+				-ms-writing-mode: tb-rl;
+				writing-mode: vertical-rl;
+    	}
+		}
+		dd{
+			color: #000;
+			width: 70%;
+			line-height: 1.5;
+			padding-left: 50px;
+			box-sizing: border-box;
+			margin: 0 0 35px;
+			text-align: left;
+			@include maxs($breakpoint-sp) {
+				width: -webkit-calc( 100% - 45px );
+				width: calc( 100% - 45px );
+				padding-left: 20px;
+				margin: 0 0 25px;
+			}
+			&:last-child{
+				margin-bottom: 0;
+			}
+			.lead{
+				font-size: 16px;
+				font-family: $font3;
+				font-weight: bold;
+				margin: 0 0 10px;
+				@include maxs($breakpoint-sp) {
+					font-size: 13px;
+					margin: 0 0 8px;
+				}
+			}
+			h4{
+				font-size: 24px;
+				font-family: $font3;
+				font-weight: bold;
+				letter-spacing: 0.05em;
+				margin: 0 0 10px;
+				@include maxs($breakpoint-sp) {
+					font-size: 18px;
+					margin: 0 0 8px;
+				}
+			}
+			.body{
+				font-size: 14px;
+				font-family: $font4;
+				font-weight: bold;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				letter-spacing: 0.05em;
+				line-height: 1.8;
+				margin-bottom: 25px;
+				padding-left: 5px;
+				@include maxs($breakpoint-sp) {
+					font-size: 12px;
+					margin-bottom: 15px;
+					padding-left: 2px;
+				}
+				&:last-child{
+					margin-bottom: 0;
+				}
+			}
+		}
+	}
+	&.pic{
+		position: relative;
+		padding: 0;
+		min-height: 430px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		@include maxs($breakpoint-sp) {
+			min-height: 300px;
+		}
+		figure{
+			width: 50%;
+			// height: 100%;
+			height: 150%;// ベタ書き追加
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			position: absolute;
+			top: 0;
+			left: 0;
+			@include maxs($breakpoint-sp) {
+				width: 100%;
+				background-position: center center;
+			}
+		}
+		dl{
+			width: 100%;
+			padding: 50px;
+			box-sizing: border-box;
+			margin-left: 50%;
+			display: block;
+			@include maxs($breakpoint-sp) {
+				margin: 0;
+				padding: 0 20px;
+				position: absolute;
+				left: 0;
+				bottom: 20px;
+			}
+			dt{
+				width: 100%;
+				clear: none;
+				float: none;
+				margin-bottom: 25px;
+				text-align: left;
+				span{
+					display: inline;
+					background-color: #FFF;
+				}
+				@include maxs($breakpoint-sp) {
+					clear: both;
+				  width: 45px;
+				  float: left;
+				}
+			}
+			dd{
+				width: 100%;
+				float: none;
+				text-align: left;
+				padding: 0;
+				@include maxs($breakpoint-sp) {
+					width: -webkit-calc( 100% - 45px );
+					width: calc( 100% - 45px );
+					float: right;
+					padding-left: 20px;
+				}
+				span{
+					display: inline;
+					background-color: #FFF;
+				}
+			}
+		}
+	}
+	#readmore_wrap{
+		width: 100%;
+		position: relative;
+		overflow: hidden;
+		transition: height 0.4s ease; 
+		&.close{
+			height: 160px !important;
+			&:after{
+				opacity: 1;
+				pointer-events: auto;
+			}
+		}
+		&:after{
+			clear: both;
+			content: "";
+			display: block;
+			width: 100%;
+			height: 80px;
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			opacity: 0;
+			background: url('../img/mask_content.png') 0 0 repeat-x;
+			transition: opacity 0.4s ease; 
+			pointer-events: none;
+			z-index: 10;
+		}
+	}
+	#btn_block_readmore{
+		cursor: pointer;
+		color: #000;
+		width: 168px;
+		height: 44px;
+		display: block;
+		font-family: $font2;
+		font-size: 16px;
+		line-height: 44px;
+		border: 1px solid #000;
+		box-sizing: border-box;
+		text-align: center;
+		background-color: #FFF;
+		position: absolute;
+		bottom: 50px;
+		left: 50%;
+		margin-left: -84px;
+		z-index: 20;
+		transition: color 0.4s ease, border 0.4s ease; 
+		&:hover{
+			color: #333;
+			border: 1px solid $red;
+		}
+		&:before{
+			content: "";
+			display: inline-block;
+			position: relative;
+			top: 0px;
+			width: 7px;
+			height: 7px;
+			border-right: 1px solid #000;
+	    border-bottom: 1px solid #000;
+	    margin-right: 12px;
+	    -webkit-transform: rotate(45deg);
+	    transform: rotate(45deg);
+	    position: relative;
+	    top: -4px;
+		}
+		.open{
+			display: inline-block;
+		}
+		.btnclose{
+			display: none;
+		}
+		&.close{
+			.open{
+				display: none;
+			}
+			.btnclose{
+				display: inline-block;
+			}
+			&:before{
+		    -webkit-transform: rotate(-135deg);
+		    transform: rotate(-135deg);
+		    position: relative;
+		    top: -1px;
+		    margin-right: 14px;
+			}
+		}
+	}
+}
+
+
+.next_content{
+	max-width: 920px;
+	margin: 0 auto;
+	@include maxs($breakpoint-sp) {
+		box-sizing: border-box;
+		padding: 0 20px;
+	}
+	.next_tit{
+		font-family: $font3;
+		font-size: 24px;
+		font-weight: bold;
+		letter-spacing: 0.08em;
+		line-height: 1.5;
+		margin: 0 0 25px;
+		@include maxs($breakpoint-sp) {
+			font-size: 18px;
+			margin: 0 0 15px;
+		}
+	}
+	p{
+		font-family: $font1;
+		font-size: 16px;
+		font-weight: bold;
+		line-height: 2;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		@include maxs($breakpoint-sp) {
+			font-size: 13px;
+			text-align: left;
+			br{
+				display: none;
+			}
+		}
+	}
+	.next_notice{
+		margin: 30px 0 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.next_l,
+		.next_r{
+			width: 100px;
+			height: 100px;
+			font-family: 'Neuton', YuMincho,"游明朝","Yu Mincho","Hiragino Mincho Pro","ヒラギノ明朝 Pro W3","HG明朝E","MS PMincho","ＭＳＰ明朝","MS Mincho","ＭＳ明朝",serif;
+			border-radius: 100%;
+			overflow: hidden;
+			box-sizing: border-box;
+			position: relative;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.next_l{
+			color: #000;
+			background-color: #FFF;
+			border: 1px solid #000;
+			z-index: 1;
+			right: -5px;
+			line-height: 1;
+			.tit_y{
+				font-size: 16px;
+				display: block;
+				position: relative;
+				top: 1px;
+				span{
+					font-size: 12px;
+				}
+			}
+			.tit_m_num{
+				font-size: 43px;
+				display: block;
+				position: relative;
+				top: -5px;
+			}
+			.tit_m{
+				font-size: 16px;
+				display: block;
+				position: relative;
+				top: -2px;
+			}
+		}
+		.next_r{
+			color: #FFF;
+			background-color: #000;
+			border: 1px solid #000;
+			z-index: 2;
+			left: -5px;
+			line-height: 1;
+			.tit_m{
+				font-size: 26px;
+				display: block;
+				position: relative;
+				left: 6px;
+				margin: 3px 0 4px;
+				span{
+					font-size: 12px;
+					display: inline-block;
+					position: relative;
+					left: -2px;
+				}
+			}
+			.tit_hatsubai{
+				font-size: 16px;
+				display: block;
+			}
+		}
+	}
+}
+
+.bgcolor {
+	background-color: #f5f0b6;
+	padding: 0.5rem 1.5rem;
+}
+
+.books_archives{
+	&.archives{
+		margin-top: 170px;
+		@include maxs($breakpoint-sp) {
+			margin-top: 80px;
+		}
+	}
+	.btns{
+		margin-top: 10px;
+	}
+}
+.backnumber{
+	.btns{
+		margin-top: 10px;
+	}
+}
+.books_list{
+	max-width: 800px;
+	margin: 0 auto;
+	.backnumber &{
+		text-align: center;
+	}
+	// .books_archives &{//どういう経緯があって改修されたか謎のため、ここは丸ごと残して、別途改修後の内容を記述する
+	// 	display: flex;
+	// 	justify-content: space-between;
+	// 	flex-wrap: wrap;
+	// 	align-items: flex-start;
+	// }
+  .books_archives &{ // ベタ書き追加
+    display:flex;
+		justify-content: flex-start;
+		flex-wrap:wrap;
+  }
+	@include maxs($breakpoint-sp) {
+		box-sizing: border-box;
+		padding: 0 30px;
+	}
+	.books_box{
+		width: 170px;
+		// margin: 0 0 30px;
+    margin: 0 15px 30px 15px; // ベタ書き追加
+		.backnumber &{
+			display: inline-block;
+		}
+		// @include maxs($breakpoint-sp) {//どういう経緯があって改修されたか謎のため、ここは丸ごと残して、別途改修後の内容を記述する
+		// 	width: 44%;
+		// 	margin: 0 0 20px;
+		// }
+    @include maxs($breakpoint-sp) { // ベタ書き追加
+      width:40%;
+      margin:0 12px 20px 10px;
+      padding-left: 5px;
+		}
+		a{
+			color: #000;
+			transition: color 0.4s ease; 
+			.thumb{
+				width: 100%;
+				margin: 0 0 15px;
+				opacity: 1;
+				transition: opacity 0.4s ease; 
+				img{
+					vertical-align: top;
+					box-shadow: 0 2px 2px rgba(0,0,0,0.1);
+				}
+			}
+			h4{
+				font-size: 13px;
+				font-family: $font1;
+				line-height: 1.4;
+				margin: 0 0 5px;
+				@include maxs($breakpoint-sp) {
+          font-size: 12px;
+				}
+        span{ // ベタ書き追加
+          font-size: 12px;
+          font-family: $font1;
+          line-height: 1.4;
+          margin: 0 0 5px;
+          @include maxs($breakpoint-sp) {
+            font-size: 11px;
+          }
+        }
+			}
+			.price{
+				font-size: 14px;
+				span{
+					font-size: 11px;
+				}
+				@include maxs($breakpoint-sp) {
+					font-size: 12px;
+					span{
+						font-size: 10px;
+					}
+				}
+			}
+			&:hover{
+				color: $red;
+				.thumb{
+					opacity: 0.5;
+				}
+			}
+		}
+	}
+	&::before{
+	  content:"";
+	  display: block;
+	  width: 170px;
+	  order:1;
+	  @include maxs($breakpoint-sp) {
+		  width: 47%;
+		}
+	}
+	&::after{
+	  content:"";
+	  display: block;
+	  width: 170px;
+	  @include maxs($breakpoint-sp) {
+		  width: 47%;
+		}
+	}
+}
+
+.btns{
+	clear: both;
+	width: 100%;
+	text-align: center;
+	margin-top: 50px;
+	letter-spacing: -0.4em;
+	.btn{
+		display: inline-block;
+		color: #000;
+		width: 220px;
+		height: 44px;
+		font-family: $font2;
+		font-size: 16px;
+		letter-spacing: normal;
+		line-height: 44px;
+		border: 1px solid #000;
+		box-sizing: border-box;
+		text-align: center;
+		background-color: #FFF;
+		vertical-align: top;
+		zoom: 1; 
+		transition: color 0.4s ease, border 0.4s ease; 
+		&:hover{
+			color: #333;
+			border: 1px solid $red;
+		}
+		&.btn_view_books:before{
+			content: "";
+			display: inline-block;
+			margin-right: 10px;
+			position: relative;
+	    top: 2px;
+	    // @include spr_re('ico_book_mini');
+      @include spr_re(
+      list.nth($ico_book_mini, 1),
+      list.nth($ico_book_mini, 2),
+      list.nth($ico_book_mini, 3),
+      list.nth($ico_book_mini, 4)
+      );
+			@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+				// @include spr_re_2x('ico_book_mini');
+        @include spr_re_2x(
+        list.nth($ico_book_mini_2x, 1),
+        list.nth($ico_book_mini_2x, 2),
+        list.nth($ico_book_mini_2x, 3),
+        list.nth($ico_book_mini_2x, 4)
+        );
+			}
+			@include maxs($breakpoint-sp) {
+				// @include spr_re_2x('ico_book_sp');
+        @include spr_re_2x(
+        list.nth($ico_book_sp, 1),
+        list.nth($ico_book_sp, 2),
+        list.nth($ico_book_sp, 3),
+        list.nth($ico_book_sp, 4)
+        );
+			}
+		}
+		&.btn_ico_cart:before{
+			content: "";
+			display: inline-block;
+			margin-right: 10px;
+			position: relative;
+	    top: 1px;
+	    // @include spr_re('ico_cart_mini');
+      @include spr_re(
+      list.nth($ico_cart_mini, 1),
+      list.nth($ico_cart_mini, 2),
+      list.nth($ico_cart_mini, 3),
+      list.nth($ico_cart_mini, 4)
+      );
+			@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+				// @include spr_re_2x('ico_cart_mini');
+        @include spr_re_2x(
+        list.nth($ico_cart_mini_2x, 1),
+        list.nth($ico_cart_mini_2x, 2),
+        list.nth($ico_cart_mini_2x, 3),
+        list.nth($ico_cart_mini_2x, 4)
+        );
+			}
+			@include maxs($breakpoint-sp) {
+				// @include spr_re_2x('ico_cart_sp');
+        @include spr_re_2x(
+          list.nth($ico_cart_sp, 1),
+          list.nth($ico_cart_sp, 2),
+          list.nth($ico_cart_sp, 3),
+          list.nth($ico_cart_sp, 4)
+          );
+			}
+		}
+		.open{
+			display: inline-block;
+		}
+		.close{
+			display: none;
+		}
+		&.active{
+			.open{
+				display: none;
+			}
+			.close{
+				display: inline-block;
+			}
+			&:before{
+		    -webkit-transform: rotate(-135deg);
+		    transform: rotate(-135deg);
+		    position: relative;
+		    top: -1px;
+		    margin-right: 14px;
+			}
+		}
+		& + .btn{
+			position: relative;
+			left: -1px;
+			@include maxs($breakpoint-sp) {
+				left: 0;
+				top: -1px;
+			}
+		}	
+	}
+}
+
+.ad{
+	.ad_list{
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		@include maxs($breakpoint-sp) {
+			box-sizing: border-box;
+			padding: 0 20px;
+		}
+		div{
+			box-sizing: border-box;
+			a{
+				display: block;
+				vertical-align: top;
+				img{
+					width: 100%;
+					height: auto;
+          /* autoprefixer: ignore next */
+					-webkit-backface-visibility:hidden;
+					backface-visibility: hidden;
+				}
+			}
+		}
+		.ban_L{
+			width: 446px;
+			margin-bottom: 25px;
+			border: 1px solid #000;
+			transition: border 0.4s ease; 
+			@include mins($breakpoint-sp) {
+				&:hover{
+					border: 1px solid $red;
+				}
+			}
+			@include maxs($breakpoint-sp) {
+				width: 100%;
+				height: auto;
+				margin-bottom: 10px;
+			}
+		}
+		.ban_M{
+			width: 208px;
+			margin-bottom: 25px;
+			border: 1px solid #000;
+			transition: border 0.4s ease; 
+			@include mins($breakpoint-sp) {
+				&:hover{
+					border: 1px solid $red;
+				}
+			}
+			@include maxs($breakpoint-sp) {
+				width: 100%;
+				height: auto;
+				margin-bottom: 10px;
+			}
+		}
+		.ban_S{
+			width: 446px;
+			a{
+				margin-bottom: 25px;
+				border: 1px solid #000;
+				transition: border 0.4s ease; 
+				@include mins($breakpoint-sp) {
+					&:hover{
+						border: 1px solid $red;
+					}
+				}
+			}
+			@include maxs($breakpoint-sp) {
+				width: 100%;
+				height: auto;
+				a{
+					margin-bottom: 10px;
+				}
+			}
+		}
+		&::before{
+		  content:"";
+		  display: block;
+		  width: 208px;
+		  order:1;
+		  @include maxs($breakpoint-sp) {
+			  display: none;
+			}
+		}
+	}
+}
+
+.sns_box{
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	@include maxs($breakpoint-sp) {
+		box-sizing: border-box;
+		padding: 0 20px;
+	}
+	.tw_box{
+		width: 430px;
+		height: 500px;
+		overflow-x: scroll;
+		box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+		@include maxs($breakpoint-sp) {
+			width: 100%;
+			height: 300px;
+			margin: 0 0 20px;
+		}
+	}
+	.fb_box{
+		width: 430px;
+		height: 500px;
+		overflow: hidden;
+		box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+		@include maxs($breakpoint-sp) {
+			width: 100%;
+			height: 300pxx;
+		}
+	}
+}
+
+#pagetop{
+	width: 40px;
+	height: 40px;
+	position: fixed;
+	right: 10px;
+	bottom: 10px;
+	opacity: 0;
+	z-index: 100;
+	transition: opacity 0.4s ease; 
+	&.active{
+		opacity: 1;
+	}
+	a{
+		display: block;
+		width: 40px;
+		height: 40px;
+		// @include spr_re_2x('pagetop');
+    @include spr_re_2x(
+    list.nth($pagetop_2x, 1),
+    list.nth($pagetop_2x, 2),
+    list.nth($pagetop_2x, 3),
+    list.nth($pagetop_2x, 4)
+    );
+	}
+}
+
+
+
+/****************************************
+
+          FOOTER
+          
+*****************************************/
+
+.footer{
+	max-width: 920px;
+	height: 50px;
+	position: relative;
+	margin: 100px auto 50px;
+	text-align: left;
+	left: 30px;
+	@include maxs($breakpoint-sp) {
+		height: auto;
+		margin: 70px auto 20px;
+		text-align: center;
+		box-sizing: border-box;
+		padding: 0 30px;
+		left: 0;
+	}
+	.copyright{
+		color: #000;
+		font-family: $font3;
+		font-size: 12px;
+		position: relative;
+		@include mins($breakpoint-sp) {
+			top: 20px;
+		}
+		@include maxs($breakpoint-sp) {
+			font-size: 10px;
+		}
+	}
+	.logo_kcpf_f{
+		z-index: 10;
+		@include mins($breakpoint-sp) {
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+		@include maxs($breakpoint-sp) {
+			margin: 50px auto 10px;
+		}
+		a{
+			display: block;
+			opacity: 1;
+			transition: opacity 0.4s ease; 
+			// @include spr_re('logo_kcpf');
+      @include spr_re(
+      list.nth($logo_kcpf, 1),
+      list.nth($logo_kcpf, 2),
+      list.nth($logo_kcpf, 3),
+      list.nth($logo_kcpf, 4)
+      );
+			@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx){
+				// @include spr_re_2x('logo_kcpf');
+        @include spr_re_2x(
+        list.nth($logo_kcpf_2x, 1),
+        list.nth($logo_kcpf_2x, 2),
+        list.nth($logo_kcpf_2x, 3),
+        list.nth($logo_kcpf_2x, 4)
+        );
+			}
+			@include maxs($breakpoint-sp) {
+				display: inline-block;
+				// @include spr_re_2x('logo_kcpf_sp');
+        @include spr_re_2x(
+          list.nth($logo_kcpf_sp, 1),
+          list.nth($logo_kcpf_sp, 2),
+          list.nth($logo_kcpf_sp, 3),
+          list.nth($logo_kcpf_sp, 4)
+          );
+			}
+			&:hover{
+				opacity: 0.5;
+			}
+		}
+	}
+}
+//ベタ書き追加分 start//////////////////
+.tcy_2{-ms-text-combine-horizontal: digits 2; text-combine-upright: digits 2;text-combine-upright: all;}
+.newbook{
+  position: relative;
+}
+.newbook::before{
+  content: 'NEW';
+  position: absolute;
+  height: 25px;
+  width: 50px;
+  background: #ed0000;
+  top: -5px;
+  left: -5px;
+  font-size: 13px;
+  color: #fff;
+  font-weight: bold;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  padding-top: 1px;
+}
+.left .sns li.ico_qa {
+  width:44px;
+  height:44px;
+}
+@include maxs($breakpoint-sp) {
+  .left .sns li.ico_qa {    
+    width: 27.5px;
+    height: 27.5px;
+  }
+}
+
+
+/****** theme-color-setting ******/
+// $theme-color: #c26625; //←ここでカラーコードを設定してください
+$theme-color: #e6b1ff; //←ここでカラーコードを設定してください
+// $theme-color: transparent; //←ここでカラーコードを設定してください
+.hero .bookinfo .bookinfo_txt .btn_buy_pc,
+.hero .bookinfo #buy_menu_sp,
+.hero .logo::before {
+  background-color: $theme-color;
+}
+.left{
+  background-color: $theme-color;
+  &::after{
+    @include mins($breakpoint-sp) {
+      background-color: $theme-color;
+    }
+    @include maxs($breakpoint-sp) {
+      background-color: $theme-color;
+    }
+  }
+}
+.hero .bookinfo .bookinfo_txt .btn_buy_pc:hover{
+  // background-color: darken($theme-color, 20%);
+  background-color: darken($theme-color, 10%);
+}
+/****** 「傑士の後姿」画像サイズ変える場合ここに入力 ******/
+.block.pic figure{
+  height:150%;
+}

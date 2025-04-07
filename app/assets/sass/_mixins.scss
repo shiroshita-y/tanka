@@ -1,0 +1,162 @@
+@mixin img-re {
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+$breakpoint-pc: 1080px;
+$breakpoint-tab: 768px;
+$breakpoint-sp: 640px;
+$breakpoint-sps: 321px;
+
+
+@mixin maxs($break-point) {
+  @media screen and (max-width: $break-point) {
+    @content;
+  }
+}
+@mixin mins($break-point) {
+  @media screen and (min-width: $break-point) {
+    @content;
+  }
+}
+@mixin screen($break-point-min, $break-point-max) {
+  @media screen and (min-width: $break-point-min) and (max-width: $break-point-max) {
+    @content;
+  }
+}
+
+@mixin tate {
+	-webkit-writing-mode: vertical-rl;
+  -ms-writing-mode: tb-rl;
+  writing-mode: vertical-rl;
+}
+
+// 
+// compassを置き換えたもの
+// 
+// $sprite_img: url("../../assets/img/org2_spr-sca39ff3cf2.png");
+// $sprite_img_2x: url("../../assets/img/org2_spr2x-s4acf7cb55c.png");
+$sprite_img: url("../../assets/img/spr-sca39ff3cf2.png");
+$sprite_img_2x: url("../../assets/img/spr2x-s4acf7cb55c.png");
+$ico_tw: (0, -179px, 44px, 44px);
+$ico_tw_2x: (0, -273px, 44px, 44px);
+$ico_tw_sp: (0, -319px, 27.5px, 27.5px);
+
+$ico_fb: (0, -65px, 44px, 44px);
+$ico_fb_2x: (0, -91px, 44px, 44px);
+$ico_fb_sp: (0, -137px, 27.5px, 27.5px);
+
+$ico_li: (0, -114px, 44px, 44px);
+$ico_li_2x: (0, -167px, 44px, 44px);
+$ico_li_sp: (0, -214px, 27.5px, 27.5px);
+
+$ico_cart: (0, -46px, 18px, 14px);
+$ico_cart_2x: (0, -58px, 18px, 14px);
+$ico_cart_sp: (0, -74px, 18px, 14px);
+
+$ico_sankaku:(0, -163px, 15px, 11px);
+$ico_sankaku_2x:(0, -244px, 16px, 12px);
+$ico_sankaku_sp:(0, -258px, 16px, 12px);
+
+$logo:(0, -228px, 94px, 250px);
+$logo_2x:(0, -349px, 94px, 250px);
+$logo_sp:(0, -689px, 46px, 122.5px);
+
+$logo_kcpf:(0, -483px, 190px, 49px);
+$logo_kcpf_2x:(0, -602px, 190px, 49px);
+$logo_kcpf_sp:(0, -653px, 132.5px, 33px);
+
+$ico_cart:(0, -22px, 24px, 19px);
+$ico_cart_2x:(0, -36px, 24px, 19px);
+$ico_cart_sp:(0, -74px, 18px, 14px);
+
+$ico_book_sp:(0, -20px, 16px, 14px);
+
+$ico_book_mini:(0, 0, 20px, 17px);
+$ico_book_mini_2x:(0, 0, 20px, 17px);
+
+$ico_cart_mini:(0, -46px, 18px, 14px);
+$ico_cart_mini_2x:(0, -58px, 18px, 14px);
+
+// $pagetop:(0, px, px, px);
+$pagetop_2x:(0, -916px, 40px, 40px);
+// $pagetop_sp:(0, px, px, px);
+
+@mixin spr_bg($x, $y, $w, $h) {
+  width: $w;
+  height: $h;
+  background-image: $sprite_img;
+  background-position: $x $y;
+  background-repeat: no-repeat;
+  background-size: 190px auto;
+}
+@mixin spr_re($x, $y, $w, $h) {
+  @include spr_bg($x, $y, $w, $h);
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+
+@mixin spr_bg_2x($x, $y, $w, $h) {
+  width: $w;
+  height: $h;
+  background-image: $sprite_img_2x; 
+  background-position: ($x) ($y);
+  background-repeat: no-repeat;
+  background-size: 190px auto;
+}
+@mixin spr_re_2x($x, $y, $w, $h) {
+  @include spr_bg_2x($x, $y, $w, $h);
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+// 以下はcompassの機能を使用してスプライト画像を生成するためのコードとなる。
+// compassはすでにサポートが終了しており動作しないため、首里エラーとなるためコメントアウトとする。
+// スプライト画像を作りたい場合はspriteSmithという代替手段が存在するが、今回スプライト画像を作成することはないため、代替手段の記述は特に行わない。
+// また、このコメントアウトでの対応は出力されるCSSにはどちらにしろ影響がないものとなる。
+// $sprite: sprite-map("spr/*.png", $spacing: 5px);
+// $sprite_img: sprite-url($sprite);
+// 
+// @mixin spr_bg($name) {
+//   width: image-width(sprite-file($sprite, $name));
+//   height: image-height(sprite-file($sprite, $name));
+//   $xpos: round(nth(sprite-position($sprite, $name), 1));
+//   $ypos: round(nth(sprite-position($sprite, $name), 2));
+//   background-image: $sprite_img;
+//   background-position: $xpos $ypos;
+//   background-repeat:no-repeat;
+//   $wbgz: image-width(sprite-path($sprite));
+//   @include background-size($wbgz auto);
+// }
+// @mixin spr_re($name) {
+//   @include spr_bg($name);
+//   text-indent: 100%;
+//   white-space: nowrap;
+//   overflow: hidden;
+// }
+
+
+// $sprite_2x: sprite-map("spr2x/*.png", $spacing: 5px);
+// $sprite_img_2x: sprite-url($sprite_2x);
+
+// @mixin spr_bg_2x($name) {
+//   width: image-width(sprite-file($sprite_2x, $name)) / 2;
+//   height: image-height(sprite-file($sprite_2x, $name)) / 2;
+//   $xpos: round(nth(sprite-position($sprite_2x, $name), 1) / 2);
+//   $ypos: round(nth(sprite-position($sprite_2x, $name), 2) / 2);
+//   background-image: $sprite_img_2x;
+//   background-position: $xpos $ypos;
+//   background-repeat:no-repeat;
+//   $wbgz: image-width(sprite-path($sprite_2x)) / 2;
+//   @include background-size($wbgz auto);
+// }
+// @mixin spr_re_2x($name) {
+//   @include spr_bg_2x($name);
+//   text-indent: 100%;
+//   white-space: nowrap;
+//   overflow: hidden;
+// }

@@ -1,0 +1,6 @@
+.DS_Store
+~$*
+/node_modules/
+/app/assets/img/
+/app/assets/バックアップ用ファイル（編集不可・本番アップしない）/_img/
+/元ファイル/
