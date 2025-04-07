@@ -2640,29 +2640,30 @@ a {
     height: 27.5px;
   }
 }
-/****** theme-color-setting ******/
+/****** theme-color-setting 
+テーマカラーを変更する場合はここを編集する ******/
 .hero .bookinfo .bookinfo_txt .btn_buy_pc,
 .hero .bookinfo #buy_menu_sp,
 .hero .logo::before {
-  background-color: #e6b1ff;
+  background-color: #c26625;
 }
 
 .left {
-  background-color: #e6b1ff;
+  background-color: #c26625;
 }
 @media screen and (min-width: 640px) {
   .left::after {
-    background-color: #e6b1ff;
+    background-color: #c26625;
   }
 }
 @media screen and (max-width: 640px) {
   .left::after {
-    background-color: #e6b1ff;
+    background-color: #c26625;
   }
 }
 
 .hero .bookinfo .bookinfo_txt .btn_buy_pc:hover {
-  background-color: rgb(213.6538461538, 126, 255);
+  background-color: rgb(151.1688311688, 79.4805194805, 28.8311688312);
 }
 
 /****** 「傑士の後姿」画像サイズ変える場合ここに入力 ******/
